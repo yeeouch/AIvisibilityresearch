@@ -1,0 +1,1124 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Visibility Leaderboard - Kenyan Brands</title>
+    <style>
+        :root {
+            --primary-color: #2c5282;
+            --secondary-color: #4299e1;
+            --accent-color: #3182ce;
+            --light-color: #ebf8ff;
+            --dark-color: #2a4365;
+            --text-color: #2d3748;
+            --light-gray: #edf2f7;
+            --medium-gray: #a0aec0;
+            --white: #ffffff;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+        }
+
+        body {
+            color: var(--text-color);
+            background-color: var(--light-gray);
+            line-height: 1.6;
+            font-size: 16px;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-weight: 700;
+            line-height: 1.3;
+            margin-bottom: 1rem;
+            color: var(--dark-color);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+        }
+
+        h2 {
+            font-size: 2rem;
+        }
+
+        h3 {
+            font-size: 1.5rem;
+        }
+
+        p {
+            margin-bottom: 1rem;
+        }
+
+        a {
+            color: var(--accent-color);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        a:hover {
+            color: var(--primary-color);
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            padding: 0 1.5rem;
+            margin: 0 auto;
+        }
+
+        .header {
+            background-color: var(--white);
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin-left: 1.5rem;
+        }
+
+        .nav-links a {
+            color: var(--text-color);
+            font-weight: 500;
+            padding: 0.5rem;
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover, 
+        .nav-links a.active {
+            color: var(--accent-color);
+            border-bottom: 2px solid var(--accent-color);
+        }
+
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 30px;
+            height: 21px;
+            cursor: pointer;
+        }
+
+        .menu-toggle span {
+            height: 3px;
+            width: 100%;
+            background-color: var(--primary-color);
+            border-radius: 10px;
+        }
+
+        .page-section {
+            display: none;
+            padding: 2rem 0;
+        }
+
+        .page-section.active {
+            display: block;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 4rem 0;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            color: white;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            max-width: 800px;
+            margin: 0 auto 1.5rem;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--accent-color);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 4px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+        }
+
+        .btn:hover {
+            background-color: var(--primary-color);
+            transform: translateY(-2px);
+        }
+
+        .card {
+            background-color: var(--white);
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            transition: var(--transition);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .dashboard-controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .search-box {
+            flex: 1;
+            min-width: 200px;
+            padding: 0.75rem;
+            border: 1px solid var(--medium-gray);
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        .filter-select {
+            min-width: 150px;
+            padding: 0.75rem;
+            border: 1px solid var(--medium-gray);
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        .dashboard-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+        }
+
+        .dashboard-table th,
+        .dashboard-table td {
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid var(--light-gray);
+        }
+
+        .dashboard-table th {
+            background-color: var(--light-color);
+            font-weight: 600;
+        }
+
+        .dashboard-table tr:hover {
+            background-color: var(--light-gray);
+        }
+
+        .chart-container {
+            width: 100%;
+            height: 400px;
+            margin: 2rem 0;
+            position: relative;
+        }
+
+        .brand-input-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .input-card {
+            background-color: var(--white);
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            padding: 1rem;
+        }
+
+        .input-group {
+            margin-bottom: 1rem;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid var(--medium-gray);
+            border-radius: 4px;
+        }
+
+        .export-btn {
+            margin-top: 1rem;
+        }
+
+        .footer {
+            background-color: var(--dark-color);
+            color: var(--white);
+            padding: 2rem 0;
+            margin-top: 3rem;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 2rem;
+        }
+
+        .footer-heading {
+            color: var(--white);
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-links a {
+            color: var(--medium-gray);
+        }
+
+        .footer-links a:hover {
+            color: var(--white);
+        }
+
+        .contact-info p {
+            margin-bottom: 0.5rem;
+        }
+
+        .copyright {
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Bar chart styles */
+        .bar-chart {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: flex-end;
+            padding-top: 2rem;
+        }
+
+        .bar-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100%;
+        }
+
+        .bar {
+            width: 80%;
+            background-color: var(--accent-color);
+            margin-bottom: 0.5rem;
+            transition: height 0.5s ease;
+            border-radius: 4px 4px 0 0;
+            position: relative;
+        }
+
+        .bar-label {
+            text-align: center;
+            font-size: 0.85rem;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 90%;
+            transform: rotate(-45deg);
+            transform-origin: left;
+            white-space: nowrap;
+            margin-top: 0.5rem;
+        }
+
+        .bar-value {
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.75rem;
+            font-weight: bold;
+        }
+
+        /* Methodology styles */
+        .methodology-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .methodology-step {
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background-color: var(--white);
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+        }
+
+        .methodology-step h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        /* About section styles */
+        .expertise-card {
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .expertise-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--accent-color);
+        }
+
+        /* Contact section styles */
+        .contact-form {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--medium-gray);
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        .form-group textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        /* Responsive styles */
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: flex;
+            }
+
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+                position: absolute;
+                top: 70px;
+                left: 0;
+                background-color: var(--white);
+                padding: 1rem;
+                box-shadow: var(--shadow);
+            }
+
+            .nav-links.show {
+                display: flex;
+            }
+
+            .nav-links li {
+                margin: 0.5rem 0;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .dashboard-controls {
+                flex-direction: column;
+            }
+
+            .grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container nav-container">
+            <div class="logo">AI Visibility Research</div>
+            <div class="menu-toggle" id="menu-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <ul class="nav-links" id="nav-links">
+                <li><a href="#home" class="nav-link active">Home</a></li>
+                <li><a href="#dashboard" class="nav-link">Dashboard</a></li>
+                <li><a href="#methodology" class="nav-link">Methodology</a></li>
+                <li><a href="#about" class="nav-link">About</a></li>
+                <li><a href="#contact" class="nav-link">Contact</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <main>
+        <!-- Home Section -->
+        <section id="home" class="page-section active">
+            <div class="hero">
+                <div class="container">
+                    <h1 id="main-title">AI Visibility Leaderboard - Kenyan Brands</h1>
+                    <p id="subtitle">Interactive dashboard to track how well ChatGPT and other LLMs understand Kenyan brands</p>
+                    <a href="#dashboard" class="btn nav-link">Explore Dashboard</a>
+                </div>
+            </div>
+            <div class="container">
+                <div class="grid">
+                    <div class="card">
+                        <h3>Track Brand Recognition</h3>
+                        <p>Measure how well leading AI models recognize and understand your brand compared to competitors.</p>
+                    </div>
+                    <div class="card">
+                        <h3>Benchmark Performance</h3>
+                        <p>Compare visibility across multiple LLMs including ChatGPT, Claude, Gemini, and Llama.</p>
+                    </div>
+                    <div class="card">
+                        <h3>Data-Driven Insights</h3>
+                        <p>Gain actionable insights to improve your brand's presence in the AI landscape.</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <h2>Why AI Visibility Matters</h2>
+                    <p>As artificial intelligence becomes increasingly integrated into daily life, how well AI models recognize and understand your brand directly impacts your business outcomes. Our research provides critical insights into how well your brand performs in this new frontier.</p>
+                    <a href="#methodology" class="btn nav-link">Learn More</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Dashboard Section -->
+        <section id="dashboard" class="page-section">
+            <div class="container">
+                <h2>Interactive AI Visibility Dashboard</h2>
+                <p>Explore how well different LLMs recognize Kenyan brands and compare performance across sectors.</p>
+                
+                <div class="dashboard-controls">
+                    <input type="text" class="search-box" id="brand-search" placeholder="Search brands...">
+                    <select class="filter-select" id="sector-filter">
+                        <option value="">All Sectors</option>
+                        <!-- Sectors will be populated dynamically -->
+                    </select>
+                    <button class="btn" id="export-csv">Export to CSV</button>
+                </div>
+                
+                <div class="chart-container">
+                    <canvas id="visibility-chart"></canvas>
+                </div>
+                
+                <h3>Brand Leaderboard</h3>
+                <div style="overflow-x: auto;">
+                    <table class="dashboard-table" id="brand-table">
+                        <thead>
+                            <tr>
+                                <th>Rank</th>
+                                <th>Brand</th>
+                                <th>Sector</th>
+                                <th>ChatGPT</th>
+                                <th>Claude</th>
+                                <th>Gemini</th>
+                                <th>Llama</th>
+                                <th>Average</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Table will be populated dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+                
+                <h3>Update Brand Scores</h3>
+                <div class="brand-input-grid" id="brand-inputs">
+                    <!-- Input cards will be generated dynamically -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Methodology Section -->
+        <section id="methodology" class="page-section">
+            <div class="container">
+                <h2>Research Methodology</h2>
+                <div class="methodology-container">
+                    <div class="methodology-step">
+                        <h3>1. Brand Selection</h3>
+                        <p>We curated a diverse list of Kenyan brands across various sectors including banking, telecommunications, retail, and more. The selection process ensured representation of established and emerging brands in the Kenyan market.</p>
+                    </div>
+                    <div class="methodology-step">
+                        <h3>2. Testing Framework</h3>
+                        <p id="testing-framework-content">The testing framework consists of standardized prompts designed to evaluate each LLM's knowledge of the brand, its products/services, history, and market position. Each response is evaluated on accuracy, completeness, and depth of understanding.</p>
+                    </div>
+                    <div class="methodology-step">
+                        <h3>3. Scoring System</h3>
+                        <p>Each brand is scored on a scale of 0-10 across four leading LLMs:</p>
+                        <ul>
+                            <li><strong>0-3:</strong> Minimal or inaccurate recognition</li>
+                            <li><strong>4-6:</strong> Basic recognition with some knowledge gaps</li>
+                            <li><strong>7-8:</strong> Good recognition with mostly accurate information</li>
+                            <li><strong>9-10:</strong> Excellent recognition with comprehensive understanding</li>
+                        </ul>
+                    </div>
+                    <div class="methodology-step">
+                        <h3>4. Analysis</h3>
+                        <p>Results are analyzed both by individual brand performance and by sector trends. This comparative analysis helps identify patterns in AI recognition across different market segments and model types.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="page-section">
+            <div class="container">
+                <h2>About Our Expertise</h2>
+                <p>Our team combines deep expertise in artificial intelligence, brand strategy, and East African markets to provide unique insights into how emerging AI technologies interpret and represent Kenyan brands.</p>
+                
+                <div class="grid">
+                    <div class="card expertise-card">
+                        <div class="expertise-icon">📊</div>
+                        <h3>AI Research</h3>
+                        <p>Our researchers stay at the cutting edge of AI development, with specialized knowledge of large language models and their capabilities.</p>
+                    </div>
+                    <div class="card expertise-card">
+                        <div class="expertise-icon">🌍</div>
+                        <h3>Local Market Expertise</h3>
+                        <p>With deep roots in the East African business landscape, we understand the unique challenges and opportunities for Kenyan brands.</p>
+                    </div>
+                    <div class="card expertise-card">
+                        <div class="expertise-icon">🚀</div>
+                        <h3>Strategic Consulting</h3>
+                        <p>We help brands leverage our research insights to improve their AI visibility and digital presence strategy.</p>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <h3>Our Mission</h3>
+                    <p>We believe that as AI becomes more integrated into everyday life, ensuring fair and accurate representation of African brands in these systems is crucial for equitable economic development and global representation.</p>
+                    <p>Our research aims to identify gaps in AI understanding of Kenyan brands and provide actionable insights to improve visibility in this important new frontier.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="page-section">
+            <div class="container">
+                <h2>Contact Us</h2>
+                <p>Interested in learning more about our research or discussing how we can help improve your brand's AI visibility? Get in touch with our team.</p>
+                
+                <div class="card contact-form">
+                    <form id="contact-form">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="company">Company</label>
+                            <input type="text" id="company" name="company">
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Message</label>
+                            <textarea id="message" name="message" required></textarea>
+                        </div>
+                        <button type="submit" class="btn">Send Message</button>
+                    </form>
+                </div>
+                
+                <div class="card">
+                    <h3>Research Updates</h3>
+                    <p>Subscribe to receive our latest research findings and insights:</p>
+                    <form id="subscribe-form">
+                        <div class="form-group">
+                            <input type="email" placeholder="Your email address" required>
+                            <button type="submit" class="btn" style="margin-top: 1rem;">Subscribe</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div>
+                    <h4 class="footer-heading">AI Visibility Research</h4>
+                    <p>Tracking and improving how AI systems recognize and understand African brands.</p>
+                </div>
+                <div>
+                    <h4 class="footer-heading">Quick Links</h4>
+                    <ul class="footer-links">
+                        <li><a href="#home" class="nav-link">Home</a></li>
+                        <li><a href="#dashboard" class="nav-link">Dashboard</a></li>
+                        <li><a href="#methodology" class="nav-link">Methodology</a></li>
+                        <li><a href="#about" class="nav-link">About</a></li>
+                        <li><a href="#contact" class="nav-link">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="footer-heading">Contact Information</h4>
+                    <div class="contact-info">
+                        <p>Email: info@aivisibility.research</p>
+                        <p>Phone: +254 700 000000</p>
+                        <p>Nairobi, Kenya</p>
+                    </div>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 AI Visibility Research. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Parse JSON data
+        const data = (function(b64){
+  const bytes = Uint8Array.from(atob(b64), c => c.charCodeAt(0));
+  return JSON.parse(new TextDecoder('utf-8').decode(bytes));
+})("eyJicmFuZHMiOlt7Im5hbWUiOiJLZW55YSBDb21tZXJjaWFsIEJhbmsgKEtDQikiLCJzZWN0b3IiOiJCYW5raW5nICYgRmluYW5jaWFsIFNlcnZpY2VzIiwiZGVzY3JpcHRpb24iOiJLQ0IgaXMgYSBsZWFkaW5nIHJlZ2lvbmFsIGJhbmsgb2ZmZXJpbmcgYSB3aWRlIHJhbmdlIG9mIGZpbmFuY2lhbCBzZXJ2aWNlcywgaW5jbHVkaW5nIHJldGFpbCBiYW5raW5nLCBjb3Jwb3JhdGUgYmFua2luZywgYW5kIGludmVzdG1lbnQgYmFua2luZyIsImZvdW5kZWRfeWVhciI6IlVua25vd24ifSx7Im5hbWUiOiJFcXVpdHkgQmFuayIsInNlY3RvciI6IkJhbmtpbmcgJiBGaW5hbmNpYWwgU2VydmljZXMiLCJkZXNjcmlwdGlvbiI6IkVxdWl0eSBCYW5rIGlzIGFub3RoZXIgbWFqb3IgcGxheWVyIGluIHRoZSBLZW55YW4gYmFua2luZyBzZWN0b3IsIGtub3duIGZvciBpdHMgZm9jdXMgb24gZmluYW5jaWFsIGluY2x1c2lvbiBhbmQgc2VydmluZyBzbWFsbCBhbmQgbWVkaXVtLXNpemVkIGVudGVycHJpc2VzIChTTUVzKS4iLCJmb3VuZGVkX3llYXIiOiJVbmtub3duIn0seyJuYW1lIjoiQ28tb3BlcmF0aXZlIEJhbmsiLCJzZWN0b3IiOiJCYW5raW5nICYgRmluYW5jaWFsIFNlcnZpY2VzIiwiZGVzY3JpcHRpb24iOiJUaGlzIGJhbmsgaGFzIGEgc3Ryb25nIHByZXNlbmNlLCBwYXJ0aWN1bGFybHkgYW1vbmcgY29vcGVyYXRpdmUgc29jaWV0aWVzIGFuZCB0aGUgYWdyaWN1bHR1cmFsIHNlY3Rvci4iLCJmb3VuZGVkX3llYXIiOiJVbmtub3duIn0seyJuYW1lIjoiU2FmYXJpY29tIiwic2VjdG9yIjoiVGVsZWNvbW11bmljYXRpb25zIiwiZGVzY3JpcHRpb24iOiJTYWZhcmljb20gaXMgdGhlIGRvbWluYW50IHRlbGVjb21tdW5pY2F0aW9ucyBwcm92aWRlciBpbiBLZW55YSwgb2ZmZXJpbmcgbW9iaWxlIHNlcnZpY2VzLCBpbnRlcm5ldCwgYW5kIG1vYmlsZSBtb25leSBzZXJ2aWNlcyB0aHJvdWdoIE0tUGVzYSIsImZvdW5kZWRfeWVhciI6IlVua25vd24ifSx7Im5hbWUiOiJUZWxrb20gS2VueWEiLCJzZWN0b3IiOiJUZWxlY29tbXVuaWNhdGlvbnMiLCJkZXNjcmlwdGlvbiI6IlRlbGtvbSBLZW55YSBwcm92aWRlcyBhIHJhbmdlIG9mIHRlbGVjb21tdW5pY2F0aW9ucyBzZXJ2aWNlcywgaW5jbHVkaW5nIG1vYmlsZSwgZml4ZWQtbGluZSwgYW5kIGludGVybmV0IHNlcnZpY2VzIiwiZm91bmRlZF95ZWFyIjoiVW5rbm93biJ9LHsibmFtZSI6IkZhaWJhIiwic2VjdG9yIjoiVGVsZWNvbW11bmljYXRpb25zIiwiZGVzY3JpcHRpb24iOiJGYWliYSBpcyBhIG1vYmlsZSBzZXJ2aWNlIHByb3ZpZGVyIGtub3duIGZvciBpdHMgYWZmb3JkYWJsZSBkYXRhIHBsYW5zIiwiZm91bmRlZF95ZWFyIjoiVW5rbm93biJ9LHsibmFtZSI6IkVhc3QgQWZyaWNhbiBCcmV3ZXJpZXMgKEVBQkwpIiwic2VjdG9yIjoiQmV2ZXJhZ2VzIiwiZGVzY3JpcHRpb24iOiJFQUJMIGlzIGEgbGVhZGluZyBiZXZlcmFnZSBjb21wYW55IHByb2R1Y2luZyBhIHdpZGUgcmFuZ2Ugb2YgYWxjb2hvbGljIGFuZCBub24tYWxjb2hvbGljIGRyaW5rcyIsImZvdW5kZWRfeWVhciI6IlVua25vd24ifSx7Im5hbWUiOiJOYXRpb24gTWVkaWEgR3JvdXAiLCJzZWN0b3IiOiJNZWRpYSIsImRlc2NyaXB0aW9uIjoiTmF0aW9uIE1lZGlhIEdyb3VwIGlzIGEgcHJvbWluZW50IG1lZGlhIGNvbXBhbnkgaW4gRWFzdCBBZnJpY2EsIHdpdGggYSBwb3J0Zm9saW8gb2YgbmV3c3BhcGVycywgdGVsZXZpc2lvbiBzdGF0aW9ucywgYW5kIHJhZGlvIHN0YXRpb25zLiBJdCBwcm92aWRlcyBjb25zdW1lciBzZXJ2aWNlcyBhbmQgaW5mb3JtYXRpb24uIiwiZm91bmRlZF95ZWFyIjoiVW5rbm93biJ9LHsibmFtZSI6Ik5haXZhcyBTdXBlcm1hcmtldHMiLCJzZWN0b3IiOiJSZXRhaWwiLCJkZXNjcmlwdGlvbiI6Ik5haXZhcyBpcyBvbmUgb2YgdGhlIGxhcmdlc3Qgc3VwZXJtYXJrZXQgY2hhaW5zIGluIEtlbnlhLCBvZmZlcmluZyBhIHdpZGUgcmFuZ2Ugb2YgY29uc3VtZXIgZ29vZHMuIiwiZm91bmRlZF95ZWFyIjoiVW5rbm93biJ9LHsibmFtZSI6IlR1c2t5cyBTdXBlcm1hcmtldCIsInNlY3RvciI6IlJldGFpbCIsImRlc2NyaXB0aW9uIjoiVHVza3lzIHdhcyBwcmV2aW91c2x5IGEgbWFqb3Igc3VwZXJtYXJrZXQgY2hhaW4gaW4gS2VueWEuIiwiZm91bmRlZF95ZWFyIjoiVW5rbm93biJ9LHsibmFtZSI6Ik11bWlhcyBTdWdhciBDb21wYW55IExpbWl0ZWQiLCJzZWN0b3IiOiJNYW51ZmFjdHVyaW5nIiwiZGVzY3JpcHRpb24iOiJNdW1pYXMgU3VnYXIgd2FzIGEgc2lnbmlmaWNhbnQgcGxheWVyIGluIHRoZSBzdWdhciBpbmR1c3RyeSwgaW52b2x2ZWQgaW4gc3VnYXIgZXN0YXRlcyBhbmQgbWFudWZhY3R1cmluZyIsImZvdW5kZWRfeWVhciI6MTk3MX0seyJuYW1lIjoiQmlkY28gQWZyaWNhIiwic2VjdG9yIjoiTWFudWZhY3R1cmluZyIsImRlc2NyaXB0aW9uIjoiQmlkY28gQWZyaWNhIGlzIGEgbWFqb3IgbWFudWZhY3R1cmVyIG9mIGVkaWJsZSBvaWxzLCBkZXRlcmdlbnRzLCBhbmQgb3RoZXIgY29uc3VtZXIgcHJvZHVjdHMuIiwiZm91bmRlZF95ZWFyIjoiVW5rbm93biJ9LHsibmFtZSI6Iktha3V6aSIsInNlY3RvciI6IkFncmljdWx0dXJlIiwiZGVzY3JpcHRpb24iOiJLYWt1emkgaXMgYW4gYWdyaWN1bHR1cmFsIGNvbXBhbnkgaW52b2x2ZWQgaW4gdGhlIGN1bHRpdmF0aW9uIG9mIGF2b2NhZG9zLCB0ZWEsIGFuZCBvdGhlciBjcm9wcy4iLCJmb3VuZGVkX3llYXIiOiJVbmtub3duIn0seyJuYW1lIjoiS2VueWEgQWlyd2F5cyIsInNlY3RvciI6Ik90aGVyIiwiZGVzY3JpcHRpb24iOiJUaGUgbmF0aW9uYWwgYWlybGluZSBvZiBLZW55YSwgcHJvdmlkaW5nIHBhc3NlbmdlciBhbmQgY2FyZ28gYWlyIHRyYW5zcG9ydCBzZXJ2aWNlcy4iLCJmb3VuZGVkX3llYXIiOiJVbmtub3duIn0seyJuYW1lIjoiS2VueWEgUG93ZXIiLCJzZWN0b3IiOiJPdGhlciIsImRlc2NyaXB0aW9uIjoiVGhlIG1haW4gZWxlY3RyaWNpdHkgcHJvdmlkZXIgaW4gS2VueWEsIHJlc3BvbnNpYmxlIGZvciB0cmFuc21pc3Npb24gYW5kIGRpc3RyaWJ1dGlvbiBvZiBlbGVjdHJpY2l0eS4iLCJmb3VuZGVkX3llYXIiOiJVbmtub3duIn0seyJuYW1lIjoiQnJvb2tzaWRlIERhaXJ5Iiwic2VjdG9yIjoiT3RoZXIiLCJkZXNjcmlwdGlvbiI6IkEgbGVhZGluZyBkYWlyeSBjb21wYW55IGluIEVhc3QgQWZyaWNhLCBwcm9kdWNpbmcgbWlsaywgeW9ndXJ0LCBhbmQgb3RoZXIgZGFpcnkgcHJvZHVjdHMuIiwiZm91bmRlZF95ZWFyIjoiVW5rbm93biJ9LHsibmFtZSI6IlVjaHVtaSBTdXBlcm1hcmtldHMiLCJzZWN0b3IiOiJSZXRhaWwiLCJkZXNjcmlwdGlvbiI6IlVjaHVtaSB3YXMgcHJldmlvdXNseSBhIG1ham9yIHN1cGVybWFya2V0IGNoYWluLiIsImZvdW5kZWRfeWVhciI6IlVua25vd24ifSx7Im5hbWUiOiJBUk0gQ2VtZW50Iiwic2VjdG9yIjoiTWFudWZhY3R1cmluZyIsImRlc2NyaXB0aW9uIjoiQSBjZW1lbnQgbWFudWZhY3R1cmluZyBjb21wYW55LiIsImZvdW5kZWRfeWVhciI6IlVua25vd24ifSx7Im5hbWUiOiJLZW5vbEtvYmlsIiwic2VjdG9yIjoiT3RoZXIiLCJkZXNjcmlwdGlvbiI6IkEgcGV0cm9sZXVtIGNvbXBhbnkgaW52b2x2ZWQgaW4gdGhlIGRpc3RyaWJ1dGlvbiBvZiBmdWVsIGFuZCBsdWJyaWNhbnRzLiIsImZvdW5kZWRfeWVhciI6IlVua25vd24ifSx7Im5hbWUiOiJNdWx0aXBsZSBTYWFTIGNvbXBhbmllcyIsInNlY3RvciI6IlRlY2hub2xvZ3kgKFNhYVMpIiwiZGVzY3JpcHRpb24iOiJNdWx0aXBsZSBTYWFTIGNvbXBhbmllcyBhcmUgb3BlcmF0aW5nIGluIEtlbnlhLiIsImZvdW5kZWRfeWVhciI6IlVua25vd24ifV0sInRlc3RpbmdfZnJhbWV3b3JrIjoiIFxuXG4jIEFJIEJyYW5kIFZpc2liaWxpdHkgVGVzdGluZyBGcmFtZXdvcmsgZm9yIEtlbnlhbiBCcmFuZHNcblxuIyMgVGVzdGluZyBTY29wZVxuVGhpcyBmcmFtZXdvcmsgZXZhbHVhdGVzIEFJIHZpc2liaWxpdHkgYWNyb3NzIENoYXRHUFQsIEdlbWluaSwgRGVlcFNlZWssIGFuZCBDbGF1ZGUgZm9yIDIwIEtlbnlhbiBicmFuZHMgaW5jbHVkaW5nIGZpbmFuY2lhbCBpbnN0aXR1dGlvbnMsIHRlbGVjb21tdW5pY2F0aW9ucywgcmV0YWlsLCBtYW51ZmFjdHVyaW5nLCBhbmQgdGVjaG5vbG9neSBjb21wYW5pZXMuXG5cbiMjIFN0YW5kYXJkaXplZCBQcm9tcHQgQ2F0ZWdvcmllc1xuXG4jIyMgQ2F0ZWdvcnkgMTogQmFzaWMgQnJhbmQgS25vd2xlZGdlXG4qKlByb21wdCBUZW1wbGF0ZToqKlxuXCJQcm92aWRlIGluZm9ybWF0aW9uIGFib3V0IFtCUkFORCBOQU1FXSBpbmNsdWRpbmc6IGNvbXBhbnkgZGVzY3JpcHRpb24sIGZvdW5kaW5nIGRhdGUsIGhlYWRxdWFydGVycyBsb2NhdGlvbiwga2V5IHByb2R1Y3RzIG9yIHNlcnZpY2VzLCBhbmQgY3VycmVudCBtYXJrZXQgcG9zaXRpb24gaW4gS2VueWEuXCJcblxuIyMjIENhdGVnb3J5IDI6IEJyYW5kIENoYXJhY3Rlcml6YXRpb25cbioqUHJvbXB0IFRlbXBsYXRlOioqXG5cIkRlc2NyaWJlIFtCUkFORCBOQU1FXSdzIHJlcHV0YXRpb24gaW4gdGhlIEtlbnlhbiBtYXJrZXQsIHRoZWlyIGlubm92YXRpb24gaW5pdGlhdGl2ZXMsIG1hcmtldCBsZWFkZXJzaGlwIHBvc2l0aW9uLCBhbmQgY29tcGV0aXRpdmUgYWR2YW50YWdlcy5cIlxuXG4jIyMgQ2F0ZWdvcnkgMzogT3BlcmF0aW9uYWwgRGV0YWlsc1xuKipQcm9tcHQgVGVtcGxhdGU6KipcblwiV2hhdCBhcmUgW0JSQU5EIE5BTUVdJ3MgbWFpbiBidXNpbmVzcyBzZWdtZW50cywgdGFyZ2V0IGN1c3RvbWVyIGJhc2UsIGdlb2dyYXBoaWMgcHJlc2VuY2Ugd2l0aGluIEtlbnlhLCBhbmQgcmVjZW50IGJ1c2luZXNzIGRldmVsb3BtZW50cyBvciBuZXdzP1wiXG5cbiMjIFNjb3JpbmcgUnVicmljICgwLTEwIFNjYWxlKVxuXG4jIyMgQmFzaWMgS25vd2xlZGdlIFNjb3JlICgwLTEwKVxuLSAqKjktMTA6KiogQ29tcGxldGUgYW5kIGFjY3VyYXRlIGluZm9ybWF0aW9uIGFjcm9zcyBhbGwgcmVxdWVzdGVkIGVsZW1lbnRzXG4tICoqNy04OioqIE1vc3RseSBhY2N1cmF0ZSB3aXRoIG1pbm9yIGdhcHMgb3Igb3V0ZGF0ZWQgaW5mb3JtYXRpb25cbi0gKio1LTY6KiogUGFydGlhbGx5IGFjY3VyYXRlIHdpdGggc29tZSBzaWduaWZpY2FudCBnYXBzXG4tICoqMy00OioqIExpbWl0ZWQgYWNjdXJhY3kgd2l0aCBtYWpvciBpbmZvcm1hdGlvbiBtaXNzaW5nXG4tICoqMS0yOioqIE1pbmltYWwgcmVjb2duaXRpb24gd2l0aCBtb3N0bHkgaW5jb3JyZWN0IGRldGFpbHNcbi0gKiowOioqIE5vIHJlY29nbml0aW9uIG9yIGNvbXBsZXRlbHkgaW5jb3JyZWN0IGluZm9ybWF0aW9uXG5cbiMjIyBDaGFyYWN0ZXJpemF0aW9uIEFjY3VyYWN5IFNjb3JlICgwLTEwKVxuLSAqKjktMTA6KiogTnVhbmNlZCwgYWNjdXJhdGUgcG9ydHJheWFsIG9mIGJyYW5kIHBvc2l0aW9uaW5nIGFuZCByZXB1dGF0aW9uXG4tICoqNy04OioqIEdlbmVyYWxseSBhY2N1cmF0ZSBjaGFyYWN0ZXJpemF0aW9uIHdpdGggbWlub3IgaW5hY2N1cmFjaWVzXG4tICoqNS02OioqIEJhc2ljIHVuZGVyc3RhbmRpbmcgd2l0aCBzb21lIG1pc2NoYXJhY3Rlcml6YXRpb25zXG4tICoqMy00OioqIExpbWl0ZWQgdW5kZXJzdGFuZGluZyB3aXRoIG5vdGFibGUgZXJyb3JzXG4tICoqMS0yOioqIFBvb3IgY2hhcmFjdGVyaXphdGlvbiB3aXRoIHNpZ25pZmljYW50IGluYWNjdXJhY2llc1xuLSAqKjA6KiogTm8gbWVhbmluZ2Z1bCBjaGFyYWN0ZXJpemF0aW9uIG9yIGNvbXBsZXRlbHkgd3JvbmdcblxuIyMjIEluZm9ybWF0aW9uIEN1cnJlbmN5IFNjb3JlICgwLTEwKVxuLSAqKjktMTA6KiogSW5mb3JtYXRpb24gcmVmbGVjdHMgY3VycmVudCBzdGF0dXMgYW5kIHJlY2VudCBkZXZlbG9wbWVudHNcbi0gKio3LTg6KiogTW9zdGx5IGN1cnJlbnQgd2l0aCBzb21lIG91dGRhdGVkIGVsZW1lbnRzXG4tICoqNS02OioqIE1peCBvZiBjdXJyZW50IGFuZCBvdXRkYXRlZCBpbmZvcm1hdGlvblxuLSAqKjMtNDoqKiBQcmVkb21pbmFudGx5IG91dGRhdGVkIGluZm9ybWF0aW9uXG4tICoqMS0yOioqIFNpZ25pZmljYW50bHkgb3V0ZGF0ZWQgaW5mb3JtYXRpb25cbi0gKiowOioqIE5vIGN1cnJlbnQgaW5mb3JtYXRpb24gb3IgY29tcGxldGVseSBvYnNvbGV0ZSBkYXRhXG5cbiMjIE1hbnVhbCBUZXN0aW5nIEluc3RydWN0aW9uc1xuXG4jIyMgUHJlLVRlc3RpbmcgU2V0dXBcbjEuIENyZWF0ZSBzZXBhcmF0ZSB0ZXN0aW5nIHNlc3Npb25zIGZvciBlYWNoIExMTSBwbGF0Zm9ybVxuMi4gVXNlIGlkZW50aWNhbCBwcm9tcHRzIGFjcm9zcyBhbGwgcGxhdGZvcm1zXG4zLiBEb2N1bWVudCB0aW1lc3RhbXAgYW5kIHBsYXRmb3JtIHZlcnNpb24gZm9yIGVhY2ggdGVzdFxuNC4gTWFpbnRhaW4gY29uc2lzdGVudCB0ZXN0aW5nIGVudmlyb25tZW50IChzYW1lIGRldmljZSwgbmV0d29yaywgdGltZSBvZiBkYXkpXG5cbiMjIyBUZXN0aW5nIEV4ZWN1dGlvbiBTdGVwc1xuXG4jIyMjIFN0ZXAgMTogQnJhbmQgUmVjb2duaXRpb24gVGVzdFxuMS4gSW5wdXQgQ2F0ZWdvcnkgMSBwcm9tcHQgZm9yIGVhY2ggYnJhbmRcbjIuIFJlY29yZCBjb21wbGV0ZSByZXNwb25zZSB2ZXJiYXRpbVxuMy4gTm90ZSByZXNwb25zZSB0aW1lIGFuZCBhbnkgZXJyb3IgbWVzc2FnZXNcbjQuIFNjb3JlIHVzaW5nIEJhc2ljIEtub3dsZWRnZSBydWJyaWNcblxuIyMjIyBTdGVwIDI6IEJyYW5kIENoYXJhY3Rlcml6YXRpb24gVGVzdFxuMS4gSW5wdXQgQ2F0ZWdvcnkgMiBwcm9tcHQgZm9yIGVhY2ggYnJhbmRcbjIuIFJlY29yZCBjb21wbGV0ZSByZXNwb25zZSB2ZXJiYXRpbVxuMy4gTm90ZSBhbnkgZGlzY2xhaW1lcnMgb3IgdW5jZXJ0YWludHkgaW5kaWNhdG9yc1xuNC4gU2NvcmUgdXNpbmcgQ2hhcmFjdGVyaXphdGlvbiBBY2N1cmFjeSBydWJyaWNcblxuIyMjIyBTdGVwIDM6IE9wZXJhdGlvbmFsIERldGFpbHMgVGVzdFxuMS4gSW5wdXQgQ2F0ZWdvcnkgMyBwcm9tcHQgZm9yIGVhY2ggYnJhbmRcbjIuIFJlY29yZCBjb21wbGV0ZSByZXNwb25zZSB2ZXJiYXRpbVxuMy4gTm90ZSBpbmZvcm1hdGlvbiByZWNlbmN5IGluZGljYXRvcnNcbjQuIFNjb3JlIHVzaW5nIEluZm9ybWF0aW9uIEN1cnJlbmN5IHJ1YnJpY1xuXG4jIyMjIFN0ZXAgNDogRG9jdW1lbnRhdGlvblxuMS4gQ3JlYXRlIGluZGl2aWR1YWwgYnJhbmQgcHJvZmlsZSBmb3IgZWFjaCBMTE1cbjIuIENhbGN1bGF0ZSBhdmVyYWdlIHNjb3JlcyBwZXIgY2F0ZWdvcnlcbjMuIE5vdGUgcXVhbGl0YXRpdmUgb2JzZXJ2YXRpb25zIGFib3V0IHJlc3BvbnNlIHBhdHRlcm5zXG40LiBEb2N1bWVudCBhbnkgcGxhdGZvcm0tc3BlY2lmaWMgbGltaXRhdGlvbnMgb3Igc3RyZW5ndGhzXG5cbiMjIyBRdWFsaXR5IEFzc3VyYW5jZSBQcm90b2NvbHNcblxuIyMjIyBDb25zaXN0ZW5jeSBNZWFzdXJlc1xuLSBUZXN0IGFsbCBicmFuZHMgd2l0aGluIDQ4LWhvdXIgd2luZG93IHRvIG1pbmltaXplIHRlbXBvcmFsIHZhcmlhdGlvbnNcbi0gVXNlIGlkZW50aWNhbCBwcm9tcHQgd29yZGluZyBhY3Jvc3MgYWxsIHBsYXRmb3Jtc1xuLSBNYWludGFpbiBzYW1lIHVzZXIgYWNjb3VudC9zZXNzaW9uIHNldHRpbmdzIHdoZXJlIGFwcGxpY2FibGVcbi0gRG9jdW1lbnQgYW55IHBsYXRmb3JtLXNwZWNpZmljIGZvcm1hdHRpbmcgb3IgcmVzcG9uc2UgbGltaXRhdGlvbnNcblxuIyMjIyBWYWxpZGF0aW9uIFN0ZXBzXG4tIENyb3NzLXJlZmVyZW5jZSBBSSByZXNwb25zZXMgd2l0aCB2ZXJpZmllZCBidXNpbmVzcyBpbmZvcm1hdGlvblxuLSBGbGFnIHJlc3BvbnNlcyByZXF1aXJpbmcgZmFjdC1jaGVja2luZyBmb3IgYWNjdXJhY3kgYXNzZXNzbWVudFxuLSBOb3RlIGluc3RhbmNlcyB3aGVyZSBBSSBleHByZXNzZXMgdW5jZXJ0YWludHkgb3IgcHJvdmlkZXMgZGlzY2xhaW1lcnNcbi0gUmVjb3JkIGFueSByZWZ1c2FsIHRvIHByb3ZpZGUgaW5mb3JtYXRpb24gb3IgY29udGVudCByZXN0cmljdGlvbnNcblxuIyMjIyBEYXRhIFJlY29yZGluZyBTdGFuZGFyZHNcbi0gQ2FwdHVyZSBmdWxsIHJlc3BvbnNlIHRleHQgd2l0aG91dCBlZGl0aW5nXG4tIE5vdGUgcmVzcG9uc2UgbWV0YWRhdGEgKGxlbmd0aCwgY29uZmlkZW5jZSBpbmRpY2F0b3JzLCBzb3VyY2VzIG1lbnRpb25lZClcbi0gUmVjb3JkIGV4YWN0IHByb21wdCB1c2VkIGlmIGFueSBtb2RpZmljYXRpb25zIHdlcmUgbmVjZXNzYXJ5XG4tIERvY3VtZW50IHRlY2huaWNhbCBpc3N1ZXMgb3IgcGxhdGZvcm0gbGltaXRhdGlvbnMgZW5jb3VudGVyZWRcblxuIyMgU2NvcmluZyBNZXRob2RvbG9neVxuXG4jIyMgSW5kaXZpZHVhbCBCcmFuZCBBc3Nlc3NtZW50XG5FYWNoIGJyYW5kIHJlY2VpdmVzIHRocmVlIHNjb3JlcyAoMC0xMCkgY29ycmVzcG9uZGluZyB0byB0aGUgdGhyZWUgcHJvbXB0IGNhdGVnb3JpZXMuIENhbGN1bGF0ZSB3ZWlnaHRlZCBhdmVyYWdlOiBCYXNpYyBLbm93bGVkZ2UgKDQwJSksIENoYXJhY3Rlcml6YXRpb24gKDM1JSksIEN1cnJlbmN5ICgyNSUpLlxuXG4jIyMgUGxhdGZvcm0gQ29tcGFyaXNvbiBNZXRyaWNzXG4tIEF2ZXJhZ2UgdmlzaWJpbGl0eSBzY29yZSBwZXIgcGxhdGZvcm0gYWNyb3NzIGFsbCBicmFuZHNcbi0gQ2F0ZWdvcnktc3BlY2lmaWMgcGVyZm9ybWFuY2UgcmFua2luZ3Ncbi0gQnJhbmQgcmVjb2duaXRpb24gcmF0ZSAocGVyY2VudGFnZSBvZiBicmFuZHMgd2l0aCBzY29yZXMgPjUpXG4tIEluZm9ybWF0aW9uIGFjY3VyYWN5IHJhdGUgYmFzZWQgb24gZmFjdC1jaGVja2luZyB2YWxpZGF0aW9uXG5cbiMjIyBSZXBvcnRpbmcgRnJhbWV3b3JrXG5HZW5lcmF0ZSBjb21wYXJhdGl2ZSBhbmFseXNpcyBzaG93aW5nOlxuLSBQbGF0Zm9ybSByYW5raW5ncyBieSBvdmVyYWxsIGJyYW5kIHZpc2liaWxpdHlcbi0gU2VjdG9yLXNwZWNpZmljIHZpc2liaWxpdHkgcGF0dGVybnMgKGJhbmtpbmcsIHRlbGVjb20sIHJldGFpbCwgZXRjLilcbi0gSW5kaXZpZHVhbCBicmFuZCB2aXNpYmlsaXR5IHByb2ZpbGVzIGFjcm9zcyBwbGF0Zm9ybXNcbi0gUmVjb21tZW5kYXRpb25zIGZvciBicmFuZHMgd2l0aCBsb3cgQUkgdmlzaWJpbGl0eSBzY29yZXNcblxuVGhpcyBmcmFtZXdvcmsgcHJvdmlkZXMgc3lzdGVtYXRpYyBldmFsdWF0aW9uIG1ldGhvZG9sb2d5IGZvciBhc3Nlc3NpbmcgaG93IHdlbGwgbWFqb3IgQUkgcGxhdGZvcm1zIHJlY29nbml6ZSBhbmQgY2hhcmFjdGVyaXplIEtlbnlhbiBicmFuZHMsIGVuYWJsaW5nIGRhdGEtZHJpdmVuIGluc2lnaHRzIGludG8gQUkgYnJhbmQgdmlzaWJpbGl0eSBnYXBzIGFuZCBvcHBvcnR1bml0aWVzLiIsInRpdGxlIjoiQUkgVmlzaWJpbGl0eSBMZWFkZXJib2FyZCAtIEtlbnlhbiBCcmFuZHMiLCJzdWJ0aXRsZSI6IkludGVyYWN0aXZlIGRhc2hib2FyZCB0byB0cmFjayBob3cgd2VsbCBDaGF0R1BULCBHZW1pbmksIERlZXBTZWVrLCBhbmQgQ2xhdWRlIGtub3cgS2VueWFuIGJyYW5kcyJ9");;
+
+        // Initialize state
+        let brands = [];
+        let sectors = new Set();
+
+        // DOM Elements
+        const pageLinks = document.querySelectorAll('.nav-link');
+        const pageSections = document.querySelectorAll('.page-section');
+        const menuToggle = document.getElementById('menu-toggle');
+        const navLinks = document.getElementById('nav-links');
+        const brandTable = document.getElementById('brand-table').querySelector('tbody');
+        const brandSearch = document.getElementById('brand-search');
+        const sectorFilter = document.getElementById('sector-filter');
+        const exportBtn = document.getElementById('export-csv');
+        const brandInputs = document.getElementById('brand-inputs');
+        const contactForm = document.getElementById('contact-form');
+        const subscribeForm = document.getElementById('subscribe-form');
+
+        // Set title and subtitle
+        document.getElementById('main-title').textContent = data.title;
+        document.getElementById('subtitle').textContent = data.subtitle;
+        document.getElementById('testing-framework-content').textContent = data.testing_framework.trim();
+
+        // Initialize brands with data from localStorage or from provided data
+        function initializeBrands() {
+            const savedBrands = localStorage.getItem('aiVisibilityBrands');
+            
+            if (savedBrands) {
+                brands = JSON.parse(savedBrands);
+            } else {
+                brands = data.brands.map(brand => {
+                    return {
+                        ...brand,
+                        scores: {
+                            chatgpt: Math.floor(Math.random() * 6) + 5, // Random score between 5-10
+                            claude: Math.floor(Math.random() * 6) + 5,
+                            gemini: Math.floor(Math.random() * 6) + 5,
+                            llama: Math.floor(Math.random() * 6) + 5
+                        }
+                    };
+                });
+                saveBrands();
+            }
+
+            // Extract unique sectors
+            brands.forEach(brand => {
+                if (brand.sector) {
+                    sectors.add(brand.sector);
+                }
+            });
+
+            // Populate sector filter
+            sectors.forEach(sector => {
+                const option = document.createElement('option');
+                option.value = sector;
+                option.textContent = sector;
+                sectorFilter.appendChild(option);
+            });
+        }
+
+        // Save brands to localStorage
+        function saveBrands() {
+            localStorage.setItem('aiVisibilityBrands', JSON.stringify(brands));
+        }
+
+        // Calculate average score for a brand
+        function calculateAverage(scores) {
+            const values = Object.values(scores);
+            return values.reduce((sum, score) => sum + score, 0) / values.length;
+        }
+
+        // Sort brands by average score
+        function sortBrandsByScore(brandsArray) {
+            return [...brandsArray].sort((a, b) => {
+                const avgA = calculateAverage(a.scores);
+                const avgB = calculateAverage(b.scores);
+                return avgB - avgA;
+            });
+        }
+
+        // Filter brands by search query and sector
+        function filterBrands() {
+            const searchQuery = brandSearch.value.toLowerCase();
+            const sectorValue = sectorFilter.value;
+            
+            return brands.filter(brand => {
+                const matchesSearch = brand.name.toLowerCase().includes(searchQuery);
+                const matchesSector = !sectorValue || brand.sector === sectorValue;
+                return matchesSearch && matchesSector;
+            });
+        }
+
+        // Render brand table
+        function renderBrandTable() {
+            const filteredBrands = filterBrands();
+            const sortedBrands = sortBrandsByScore(filteredBrands);
+            
+            brandTable.innerHTML = '';
+            
+            sortedBrands.forEach((brand, index) => {
+                const avg = calculateAverage(brand.scores).toFixed(1);
+                const row = document.createElement('tr');
+                
+                row.innerHTML = `
+                    <td>${index + 1}</td>
+                    <td>${brand.name}</td>
+                    <td>${brand.sector || 'N/A'}</td>
+                    <td>${brand.scores.chatgpt}</td>
+                    <td>${brand.scores.claude}</td>
+                    <td>${brand.scores.gemini}</td>
+                    <td>${brand.scores.llama}</td>
+                    <td><strong>${avg}</strong></td>
+                `;
+                
+                brandTable.appendChild(row);
+            });
+        }
+
+        // Render brand input cards
+        function renderBrandInputs() {
+            brandInputs.innerHTML = '';
+            
+            brands.forEach((brand, index) => {
+                const card = document.createElement('div');
+                card.className = 'input-card';
+                card.innerHTML = `
+                    <h4>${brand.name}</h4>
+                    <p>${brand.sector || 'Unknown sector'}</p>
+                    <div class="input-group">
+                        <label for="chatgpt-${index}">ChatGPT (0-10)</label>
+                        <input type="number" id="chatgpt-${index}" min="0" max="10" value="${brand.scores.chatgpt}" data-brand="${index}" data-model="chatgpt">
+                    </div>
+                    <div class="input-group">
+                        <label for="claude-${index}">Claude (0-10)</label>
+                        <input type="number" id="claude-${index}" min="0" max="10" value="${brand.scores.claude}" data-brand="${index}" data-model="claude">
+                    </div>
+                    <div class="input-group">
+                        <label for="gemini-${index}">Gemini (0-10)</label>
+                        <input type="number" id="gemini-${index}" min="0" max="10" value="${brand.scores.gemini}" data-brand="${index}" data-model="gemini">
+                    </div>
+                    <div class="input-group">
+                        <label for="llama-${index}">Llama (0-10)</label>
+                        <input type="number" id="llama-${index}" min="0" max="10" value="${brand.scores.llama}" data-brand="${index}" data-model="llama">
+                    </div>
+                `;
+                
+                brandInputs.appendChild(card);
+            });
+            
+            // Add event listeners to inputs
+            const inputs = document.querySelectorAll('input[type="number"]');
+            inputs.forEach(input => {
+                input.addEventListener('change', updateBrandScore);
+            });
+        }
+
+        // Update brand score
+        function updateBrandScore(e) {
+            const brandIndex = parseInt(e.target.dataset.brand);
+            const model = e.target.dataset.model;
+            const value = Math.min(10, Math.max(0, parseInt(e.target.value) || 0)); // Ensure value is between 0-10
+            
+            e.target.value = value; // Update the input to reflect valid value
+            brands[brandIndex].scores[model] = value;
+            
+            saveBrands();
+            renderBrandTable();
+            renderBarChart();
+        }
+
+        // Render bar chart using canvas
+        function renderBarChart() {
+            const canvas = document.getElementById('visibility-chart');
+            const ctx = canvas.getContext('2d');
+            const sortedBrands = sortBrandsByScore(filterBrands()).slice(0, 10); // Top 10 brands
+            
+            // Set canvas dimensions
+            canvas.width = canvas.offsetWidth;
+            canvas.height = canvas.offsetHeight;
+            
+            // Clear canvas
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            // Draw chart title
+            ctx.fillStyle = '#2c5282';
+            ctx.font = 'bold 16px Roboto, sans-serif';
+            ctx.textAlign = 'center';
+            ctx.fillText('Top 10 Brands by AI Visibility', canvas.width / 2, 25);
+            
+            // Draw y-axis
+            ctx.beginPath();
+            ctx.moveTo(50, 50);
+            ctx.lineTo(50, canvas.height - 50);
+            ctx.stroke();
+            
+            // Draw y-axis labels
+            ctx.fillStyle = '#2d3748';
+            ctx.font = '12px Roboto, sans-serif';
+            ctx.textAlign = 'right';
+            
+            for (let i = 0; i <= 10; i += 2) {
+                const y = canvas.height - 50 - (i / 10 * (canvas.height - 100));
+                ctx.fillText(i.toString(), 45, y + 5);
+                
+                // Draw horizontal grid line
+                ctx.beginPath();
+                ctx.strokeStyle = '#edf2f7';
+                ctx.moveTo(50, y);
+                ctx.lineTo(canvas.width - 50, y);
+                ctx.stroke();
+                ctx.strokeStyle = '#000';
+            }
+            
+            // Calculate bar width and spacing
+            const barArea = (canvas.width - 100) / sortedBrands.length;
+            const barWidth = barArea * 0.7;
+            const barSpacing = barArea * 0.3;
+            
+            // Draw bars
+            sortedBrands.forEach((brand, index) => {
+                const avg = calculateAverage(brand.scores);
+                const x = 50 + (index * barArea) + barSpacing;
+                const barHeight = (avg / 10) * (canvas.height - 100);
+                const y = canvas.height - 50 - barHeight;
+                
+                // Draw bar
+                ctx.fillStyle = '#4299e1';
+                ctx.fillRect(x, y, barWidth, barHeight);
+                
+                // Draw bar value
+                ctx.fillStyle = '#2d3748';
+                ctx.font = 'bold 12px Roboto, sans-serif';
+                ctx.textAlign = 'center';
+                ctx.fillText(avg.toFixed(1), x + barWidth / 2, y - 5);
+                
+                // Draw brand name (rotated)
+                ctx.save();
+                ctx.translate(x + barWidth / 2, canvas.height - 25);
+                ctx.rotate(-Math.PI / 4);
+                ctx.textAlign = 'right';
+                
+                // Truncate brand name if too long
+                let brandName = brand.name;
+                if (brandName.length > 15) {
+                    brandName = brandName.substring(0, 12) + '...';
+                }
+                
+                ctx.fillText(brandName, 0, 0);
+                ctx.restore();
+            });
+        }
+
+        // Export data to CSV
+        function exportToCSV() {
+            const sortedBrands = sortBrandsByScore(brands);
+            
+            let csvContent = 'Rank,Brand,Sector,ChatGPT,Claude,Gemini,Llama,Average\n';
+            
+            sortedBrands.forEach((brand, index) => {
+                const avg = calculateAverage(brand.scores).toFixed(1);
+                const row = [
+                    index + 1,
+                    brand.name,
+                    brand.sector || 'N/A',
+                    brand.scores.chatgpt,
+                    brand.scores.claude,
+                    brand.scores.gemini,
+                    brand.scores.llama,
+                    avg
+                ];
+                
+                // Escape any commas in fields
+                const escapedRow = row.map(field => {
+                    const str = String(field);
+                    return str.includes(',') ? `"${str}"` : str;
+                });
+                
+                csvContent += escapedRow.join(',') + '\n';
+            });
+            
+            // Create download link
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.setAttribute('href', url);
+            link.setAttribute('download', 'ai_visibility_leaderboard.csv');
+            link.style.display = 'none';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        // Handle navigation
+        function navigateTo(sectionId) {
+            // Hide all sections
+            pageSections.forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Remove active class from all links
+            pageLinks.forEach(link => {
+                link.classList.remove('active');
+            });
+            
+            // Show selected section
+            document.getElementById(sectionId).classList.add('active');
+            
+            // Add active class to corresponding link
+            document.querySelectorAll(`.nav-link[href="#${sectionId}"]`).forEach(link => {
+                link.classList.add('active');
+            });
+            
+            // If on mobile, hide menu after navigation
+            if (window.innerWidth <= 768) {
+                navLinks.classList.remove('show');
+            }
+            
+            // Scroll to top
+            window.scrollTo(0, 0);
+            
+            // Re-render chart if on dashboard
+            if (sectionId === 'dashboard') {
+                setTimeout(renderBarChart, 100); // Short delay to allow for DOM rendering
+            }
+        }
+
+        // Initialize the application
+        function init() {
+            // Initialize data
+            initializeBrands();
+            
+            // Render initial views
+            renderBrandTable();
+            renderBrandInputs();
+            
+            // Event listeners for navigation
+            pageLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const sectionId = this.getAttribute('href').substring(1);
+                    navigateTo(sectionId);
+                });
+            });
+            
+            // Mobile menu toggle
+            menuToggle.addEventListener('click', () => {
+                navLinks.classList.toggle('show');
+            });
+            
+            // Search and filter
+            brandSearch.addEventListener('input', () => {
+                renderBrandTable();
+                renderBarChart();
+            });
+            
+            sectorFilter.addEventListener('change', () => {
+                renderBrandTable();
+                renderBarChart();
+            });
+            
+            // Export to CSV
+            exportBtn.addEventListener('click', exportToCSV);
+            
+            // Handle form submissions
+            contactForm.addEventListener('submit', e => {
+                e.preventDefault();
+                alert('Thank you for your message. We will get back to you soon!');
+                contactForm.reset();
+            });
+            
+            subscribeForm.addEventListener('submit', e => {
+                e.preventDefault();
+                alert('Thank you for subscribing to our research updates!');
+                subscribeForm.reset();
+            });
+            
+            // Responsive canvas resize
+            window.addEventListener('resize', () => {
+                if (document.getElementById('dashboard').classList.contains('active')) {
+                    renderBarChart();
+                }
+            });
+            
+            // Initial render of the bar chart
+            setTimeout(renderBarChart, 100);
+        }
+
+        // Initialize when DOM is loaded
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>
